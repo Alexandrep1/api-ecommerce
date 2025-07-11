@@ -1,20 +1,18 @@
-import { AppDataSource } from "../database/data-source";
+import { AppDataSource } from "../database/data-source"
 import { Usuario } from "../entities/Usuario";
-const bcrypt = require("bcrypt")
-const jwt = require("jsonwebtoken")
-const repo = AppDataSource.getRepository(Usuario)
+const bcrypt =  require("bcrypt")
+const jwt = require('jsonwebtoken')
+const repo = AppDataSource.getRepository(Usuario);
 
 export const AuthService = {
-
-    async auth(email: string, password: string){
-        
+    async auth(email: string, senha: string) {
         const user = await repo.findOneBy({ email })
 
         if(user) {
-            const passwordCompare = await bcrypt.compare(password, user.password)
+            const passwordCompare = await bcrypt.compare(senha, user.password);
 
             if(!passwordCompare){
-                throw new Error("dados e login incorretos")
+                throw new Error("Dados de login incorretos")
             }
 
             //criar um token jwt
@@ -25,12 +23,12 @@ export const AuthService = {
                     nome: user.nome
                 },
                 process.env.JWT_SECRET,
-                { expiresIn: process.env.JWT_EXPIRE || "1h"}
+                {expiresIn: process.env.JWT_EXPIRE || '1h'}
             )
 
-            //retornar os dados do usuário com o token
+            //retornar os dados do usuario com o token
             return{
-                user: {
+                user:{
                     id: user.id,
                     nome: user.nome,
                     email: user.email

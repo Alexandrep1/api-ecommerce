@@ -2,6 +2,7 @@ import express from "express";
 import 'reflect-metadata';
 import routeProdutos from './routes/produto.routes'
 import routeUser from './routes/usuario.routes'
+import routeLogin from "./routes/auth.routes"
 import { AppDataSource } from "./database/data-source";
 require('dotenv').config()
 
@@ -12,6 +13,7 @@ AppDataSource.initialize()
         app.use(express.json())
         app.use('/produtos',routeProdutos)
         app.use('/usuarios', routeUser)
+        app.use("/login", routeLogin)
         app.listen(process.env.API_PORT, () => {
             console.log("servidor rodando na porta ",process.env.API_PORT)
         })
