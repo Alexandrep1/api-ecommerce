@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { UsuarioService } from "../services/UsuarioService";
 
 const notFound = "Recusro não encontrado"
-const serverError = "Erro ao realizar a operacção"
+const serverError = "Erro ao realizar a operação"
 
 export const UsuarioController = {
 
